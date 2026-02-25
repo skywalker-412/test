@@ -1,4 +1,10 @@
 import React from 'react';
+import UserForm from '../components/UserForm';
+import EventForm from '../components/EventForm';
+import BookingForm from '../components/BookingForm';
+import PaymentForm from '../components/PaymentForm';
+import NotificationForm from '../components/NotificationForm';
+import ReviewForm from '../components/ReviewForm';
 
 const services = [
   { name: 'API Gateway', port: 4000 },
@@ -41,6 +47,12 @@ export default function Home() {
           </li>
         ))}
       </ul>
+      <UserForm />
+      <EventForm />
+      <BookingForm />
+      <PaymentForm />
+      <NotificationForm />
+      <ReviewForm />
       <p style={{ color: '#888', marginTop: 40 }}>
         Click a service to open its endpoint in a new tab.
       </p>
