@@ -11,6 +11,8 @@ const services = [
 ];
 
 export default function Home() {
+  // Replace with your server's public IP or domain
+  const serverIp = '54.206.27.79';
   return (
     <div style={{ fontFamily: 'sans-serif', padding: 32 }}>
       <h1>Smart Event Booking Platform</h1>
@@ -19,7 +21,7 @@ export default function Home() {
         {services.map((svc) => (
           <li key={svc.port} style={{ margin: '16px 0' }}>
             <a
-              href={`http://localhost:${svc.port}/`}
+              href={`http://${serverIp}:${svc.port}/`}
               target="_blank"
               rel="noopener noreferrer"
               style={{
