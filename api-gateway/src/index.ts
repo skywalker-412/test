@@ -1,6 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+
 const app = express();
+app.use(cors());
 
 app.use('/users', createProxyMiddleware({ target: 'http://user-service:4001', changeOrigin: true }));
 app.use('/events', createProxyMiddleware({ target: 'http://event-service:4002', changeOrigin: true }));
