@@ -1,0 +1,120 @@
+version: '3.8'
+services:
+  user-service:
+    build: ./user-service
+    ports:
+      - "4001:4001"
+    environment:
+      - DB_HOST=user-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=users
+    depends_on:
+      - user-db
+  event-service:
+    build: ./event-service
+    ports:
+      - "4002:4002"
+    environment:
+      - DB_HOST=event-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=events
+    depends_on:
+      - event-db
+  booking-service:
+    build: ./booking-service
+    ports:
+      - "4003:4003"
+    environment:
+      - DB_HOST=booking-db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=bookings
+    depends_on:
+      - booking-db
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "4004:4004"
+    environment:
+      - DB_HOST=payment-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=payments
+    depends_on:
+      - payment-db
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "4005:4005"
+    environment:
+      - DB_HOST=notification-db
+      - DB_PORT=27017
+      - DB_NAME=notifications
+    depends_on:
+      - notification-db
+  review-service:
+    build: ./review-service
+    ports:
+      - "4006:4006"
+    environment:
+      - DB_HOST=review-db
+      - DB_PORT=27017
+      - DB_NAME=reviews
+    depends_on:
+      - review-db
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      - user-service
+      - event-service
+      - booking-service
+      - payment-service
+      - notification-service
+      - review-service
+  user-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users
+    ports:
+      - "5433:5432"
+  event-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: events
+    ports:
+      - "5434:5432"
+  booking-db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookings
+    ports:
+      - "3307:3306"
+  payment-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: payments
+    ports:
+      - "5435:5432"
+  notification-db:
+    image: mongo:6
+    ports:
+      - "27018:27017"
+  review-db:
+    image: mongo:6
+    ports:
+      - "27019:27017"
